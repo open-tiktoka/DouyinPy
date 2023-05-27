@@ -21,7 +21,7 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 **Version Information**
-Please include what versions of pydantic, playwright, and tiktokapipy you have installed (can be found with `pip freeze`).
+Please include what versions of pydantic, playwright, and douyinapipy you have installed (can be found with `pip freeze`).
 
 **Additional context**
 Add any other context about the problem here.

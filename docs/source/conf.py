@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath("../ext"))  # Custom ext dir relative to this
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "TikTokPy"
+project = "DouyinPy"
 copyright = "2023, Russell Newton"
 author = "Russell Newton"
 release = "0.1.13.post1"
@@ -64,7 +64,7 @@ html_theme_options = {
 
 autosummary_generate = True  # Turn on pydantic_autosummary
 autosummary_mock_imports = [  # Prevent certain modules from generating
-    "tiktokapipy.models.raw_data",
+    "douyinapipy.models.raw_data",
 ]
 autoclass_content = "both"  # Add __init__ doc (ie. params) to class summaries
 html_show_sourcelink = (

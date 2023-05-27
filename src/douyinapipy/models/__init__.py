@@ -1,5 +1,5 @@
 """
-Pydantic models used to load and store TikTok data
+Pydantic models used to load and store Douyin data
 """
 
 from __future__ import annotations
@@ -70,7 +70,7 @@ class DataModelDefaultDocumentor(ModelMetaclass):
         super().__init__(*args)
 
 
-class TikTokDataModel(BaseModel, metaclass=DataModelDefaultDocumentor):
+class DouyinDataModel(BaseModel, metaclass=DataModelDefaultDocumentor):
     """:autodoc-skip:"""
 
     def __init_subclass__(cls, **kwargs):
@@ -79,7 +79,7 @@ class TikTokDataModel(BaseModel, metaclass=DataModelDefaultDocumentor):
             super.__init_subclass__()
 
 
-class CamelCaseModel(TikTokDataModel):
+class CamelCaseModel(DouyinDataModel):
     """:autodoc-skip:"""
 
     class Config:
@@ -88,7 +88,7 @@ class CamelCaseModel(TikTokDataModel):
         json_loads = _load_with_id_alias
 
 
-class TitleCaseModel(TikTokDataModel):
+class TitleCaseModel(DouyinDataModel):
     """:autodoc-skip:"""
 
     class Config:
@@ -97,8 +97,8 @@ class TitleCaseModel(TikTokDataModel):
         json_loads = _load_with_id_alias
 
 
-_DeferredIterInT = TypeVar("_DeferredIterInT", bound=TikTokDataModel)
-_DeferredIterOutT = TypeVar("_DeferredIterOutT", bound=TikTokDataModel)
+_DeferredIterInT = TypeVar("_DeferredIterInT", bound=DouyinDataModel)
+_DeferredIterOutT = TypeVar("_DeferredIterOutT", bound=DouyinDataModel)
 
 
 @runtime_checkable
@@ -163,7 +163,7 @@ class AsyncDeferredIterator(Protocol[_DeferredIterInT, _DeferredIterOutT]):
 
 __all__ = [
     "CamelCaseModel",
-    "TikTokDataModel",
+    "DouyinDataModel",
     "TitleCaseModel",
     "DeferredIterator",
     "AsyncDeferredIterator",

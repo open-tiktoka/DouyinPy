@@ -26,12 +26,10 @@ if TYPE_CHECKING:
     from _typeshed import SupportsLessThan
 
 import playwright.sync_api
-from playwright.sync_api import Page, Route, TimeoutError, sync_playwright
-from pydantic import ValidationError
-from tiktokapipy import TikTokAPIError, TikTokAPIWarning
-from tiktokapipy.models import DeferredIterator, TikTokDataModel
-from tiktokapipy.models.challenge import Challenge, LightChallenge, challenge_link
-from tiktokapipy.models.raw_data import (
+from douyinapipy import DouyinAPIError, DouyinAPIWarning
+from douyinapipy.models import DeferredIterator, DouyinDataModel
+from douyinapipy.models.challenge import Challenge, LightChallenge, challenge_link
+from douyinapipy.models.raw_data import (
     APIResponse,
     ChallengeResponse,
     MobileChallengeResponse,
@@ -42,18 +40,20 @@ from tiktokapipy.models.raw_data import (
     UserResponse,
     VideoResponse,
 )
-from tiktokapipy.models.user import LightUser, User, user_link
-from tiktokapipy.models.video import LightVideo, Video, video_link
+from douyinapipy.models.user import LightUser, User, user_link
+from douyinapipy.models.video import LightVideo, Video, video_link
+from playwright.sync_api import Page, Route, TimeoutError, sync_playwright
+from pydantic import ValidationError
 
 _DataModelT = TypeVar("_DataModelT", bound=PrimaryResponseType, covariant=True)
 """
 Generic used for data scraping.
 """
-_LightIterInT = TypeVar("_LightIterInT", bound=TikTokDataModel, covariant=True)
+_LightIterInT = TypeVar("_LightIterInT", bound=DouyinDataModel, covariant=True)
 """
 Generic used as LightIter input type.
 """
-_LightIterOutT = TypeVar("_LightIterOutT", bound=TikTokDataModel, covariant=True)
+_LightIterOutT = TypeVar("_LightIterOutT", bound=DouyinDataModel, covariant=True)
 """
 Generic used as LightIter output type.
 """
@@ -66,7 +66,7 @@ class LightIter(Generic[_LightIterInT, _LightIterOutT], Iterator[_LightIterOutT]
     :autodoc-skip:
     """
 
-    def __init__(self, light_models: List[_LightIterInT], api: TikTokAPI):
+    def __init__(self, light_models: List[_LightIterInT], api: DouyinAPI):
         self.light_models: List[_LightIterInT] = light_models
         self._api = api
 
@@ -121,7 +121,7 @@ class LightUserGetter:
     :autodoc-skip:
     """
 
-    def __init__(self, user: str, api: TikTokAPI):
+    def __init__(self, user: str, api: DouyinAPI):
         self.light_user = LightUser(unique_id=user)
         self._api = api
 
@@ -129,8 +129,8 @@ class LightUserGetter:
         return self._api.user(self.light_user.unique_id)
 
 
-class TikTokAPI:
-    """Synchronous API used to scrape data from TikTok"""
+class DouyinAPI:
+    """Synchronous API used to scrape data from Douyin"""
 
     def __init__(
         self,
@@ -154,12 +154,12 @@ class TikTokAPI:
             load more content from the page. This is the default time for all API calls. It can be overridden in each
             call.
         :param scroll_down_delay: How much time (in seconds) should pass before starting scrolling down. It is suggested
-            that this be more than 0, as no delay can result in API deadlocks on TikTok. Like ``scroll_down_time``, this
+            that this be more than 0, as no delay can result in API deadlocks on Douyin. Like ``scroll_down_time``, this
             can be overridden in each call.
         :param scroll_down_iter_delay: How much time (in seconds) should pass between scrolls. Like
             ``scroll_down_time``, this can be overridden in each call.
         :param headless: Whether to use headless browsing.
-        :param data_dump_file: If the data scraped from TikTok should also be dumped to a JSON file before parsing,
+        :param data_dump_file: If the data scraped from Douyin should also be dumped to a JSON file before parsing,
             specify the name of the dump file (exluding '.json').
         :param emulate_mobile: Whether to emulate a mobile device during sraping. Required for retrieving data
             on slideshows.
@@ -191,7 +191,7 @@ class TikTokAPI:
                 stacklevel=2,
             )
 
-    def __enter__(self) -> TikTokAPI:
+    def __enter__(self) -> DouyinAPI:
         self._playwright = sync_playwright().start()
         self._browser = self.playwright.chromium.launch(
             headless=self.headless, **self.kwargs
@@ -218,21 +218,21 @@ class TikTokAPI:
     def playwright(self):
         """The playwright instance used for data scraping"""
         if not hasattr(self, "_playwright"):
-            raise TikTokAPIError("TikTokAPI must be used as a context manager")
+            raise DouyinAPIError("DouyinAPI must be used as a context manager")
         return self._playwright
 
     @property
     def browser(self):
         """The playwright Browser instance used for data scraping"""
         if not hasattr(self, "_browser"):
-            raise TikTokAPIError("TikTokAPI must be used as a context manager")
+            raise DouyinAPIError("DouyinAPI must be used as a context manager")
         return self._browser
 
     @property
     def context(self):
         """The playwright Context instance used for data scraping"""
         if not hasattr(self, "_context"):
-            raise TikTokAPIError("TikTokAPI must be used as a context manager")
+            raise DouyinAPIError("DouyinAPI must be used as a context manager")
         return self._context
 
     @property
@@ -276,7 +276,7 @@ class TikTokAPI:
         scroll_down_iter_delay: float = None,
     ) -> Challenge:
         """
-        Retrieve data on a :class:`.Challenge` (hashtag) from TikTok. Only up to the ``video_limit`` most recent videos
+        Retrieve data on a :class:`.Challenge` (hashtag) from Douyin. Only up to the ``video_limit`` most recent videos
         will be retrievable by the scraper.
 
         :param challenge_name: The name of the challenge. e.g.: ``"fyp"``
@@ -306,10 +306,10 @@ class TikTokAPI:
         scroll_down_iter_delay: float = None,
     ) -> User:
         """
-        Retrieve data on a :class:`.User` from TikTok. Only up to the ``video_limit`` most recent videos will be
+        Retrieve data on a :class:`.User` from Douyin. Only up to the ``video_limit`` most recent videos will be
         retrievable by the scraper.
 
-        :param user: The unique user or id of the user. e.g.: for @tiktok, use ``"tiktok"``
+        :param user: The unique user or id of the user. e.g.: for @douyin, use ``"douyin"``
         :param video_limit: The max number of recent videos to retrieve. Set to 0 for no limit
         :param scroll_down_time: Optional override for value used in API constructor.
         :param scroll_down_delay: Optional override for value used in API constructor.
@@ -335,8 +335,8 @@ class TikTokAPI:
         scroll_down_iter_delay: float = None,
     ) -> Video:
         """
-        Retrieve data on a :class:`.Video` from TikTok. If the video is a slideshow, :attr:`.emulate_mobile` must be
-        set to ``True`` at API initialization or this method will raise a :exc:`TikTokAPIError`.
+        Retrieve data on a :class:`.Video` from Douyin. If the video is a slideshow, :attr:`.emulate_mobile` must be
+        set to ``True`` at API initialization or this method will raise a :exc:`DouyinAPIError`.
 
         :param link: The link to the video. Can be found from a unique video id with :func:`.video_link`.
         :param scroll_down_time: Optional override for value used in API constructor.
@@ -435,14 +435,14 @@ if (navigator.webdriver === false) {
             except TimeoutError:
                 warnings.warn(
                     "Reached navigation timeout. Retrying...",
-                    category=TikTokAPIWarning,
+                    category=DouyinAPIWarning,
                     stacklevel=2,
                 )
                 page.close()
                 continue
             break
         else:
-            raise TikTokAPIError(
+            raise DouyinAPIError(
                 f"Data scraping unable to complete in {self.navigation_timeout / 1000}s "
                 f"(retries: {self.navigation_retries})"
             )
@@ -478,7 +478,7 @@ if (navigator.webdriver === false) {
         video_limit: int = 0,
     ):
         if response.challenge_page.status_code:
-            raise TikTokAPIError(
+            raise DouyinAPIError(
                 f"Error in challenge extraction: status code {response.challenge_page.status_code}"
             )
         challenge = response.challenge_page.challenge_info.challenge
@@ -495,7 +495,7 @@ if (navigator.webdriver === false) {
         video_limit: int = 0,
     ):
         if response.user_page.status_code:
-            raise TikTokAPIError(
+            raise DouyinAPIError(
                 f"Error in user extraction: status code {response.user_page.status_code}"
             )
         name, user = list(response.user_module.users.items())[0]
@@ -526,10 +526,10 @@ if (navigator.webdriver === false) {
     ):
         if response.video_page.status_code:
             if response.video_page.status_code == 10239:
-                raise TikTokAPIError(
+                raise DouyinAPIError(
                     "Slideshows can't be extracted without mobile emulation."
                 )
-            raise TikTokAPIError(
+            raise DouyinAPIError(
                 f"Error in video extraction: status code {response.video_page.status_code}"
             )
         video = list(response.item_module.values())[0]
@@ -552,7 +552,7 @@ if (navigator.webdriver === false) {
             warnings.warn(
                 "Was unable to collect comments.\n"
                 "A second attempt or setting a nonzero value for scroll_down_time might work.",
-                category=TikTokAPIWarning,
+                category=DouyinAPIWarning,
                 stacklevel=2,
             )
         if isinstance(video.author, LightUser):
@@ -597,4 +597,4 @@ var intervalID = setInterval(function () {
         page.evaluate("clearInterval(intervalID)")
 
 
-__all__ = ["TikTokAPI"]
+__all__ = ["DouyinAPI"]

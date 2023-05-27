@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Optional, Union
 from urllib.parse import quote
 
-from tiktokapipy.models import AsyncDeferredIterator, CamelCaseModel, DeferredIterator
+from douyinapipy.models import AsyncDeferredIterator, CamelCaseModel, DeferredIterator
 
 
 class BioLink(CamelCaseModel):
@@ -90,8 +90,8 @@ class User(LightUser):
     """Set on return from API. Can be iterated over to load :class:`.Video`s."""
 
 
-from tiktokapipy.models.video import LightVideo, Video  # noqa E402
-
+from douyinapipy.models.video import LightVideo, Video  # noqa E402
+from douyinapipy.utils import User_search_douyin
 User.update_forward_refs()
 
 
@@ -99,10 +99,19 @@ def user_link(user: Union[int, str]) -> str:
     """
     Get a link to extract user data from the user's id or unique username.
 
-    e.g.: ``user_link("tiktok")``
+    e.g.: ``user_link("douyin")``
 
-    :param user: The user's unique name (no ``'@'``) or id.
+    :param user: The user's unique secuid.
     :return: a link that can be used to scrape data on the User.
+    
     """
-    quoted = quote(user)
-    return f"https://www.tiktok.com/@{quoted}"
+    # quoted = quote(user)
+    usersearch = User_search()
+    # usersearch.open_page()
+    quoted=usersearch.user_search(user)
+    # time.sleep(100)
+    # for i in range(340,65535):
+    #     print(driver.user_search(chr(i)))
+    # u.close_driver()
+    
+    return f"https://www.douyin.com/user/{quoted}"

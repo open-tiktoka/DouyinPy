@@ -1,16 +1,16 @@
 """
-Unprocessed data retrieved directly from TikTok
+Unprocessed data retrieved directly from Douyin
 :autodoc-skip:
 """
 
 import abc
 from typing import Dict, Generic, List, Optional, TypeVar, Union
 
-from tiktokapipy.models import CamelCaseModel, TitleCaseModel
-from tiktokapipy.models.challenge import Challenge, ChallengeStats
-from tiktokapipy.models.comment import Comment
-from tiktokapipy.models.user import User, UserStats
-from tiktokapipy.models.video import LightVideo, Video
+from douyinapipy.models import CamelCaseModel, TitleCaseModel
+from douyinapipy.models.challenge import Challenge, ChallengeStats
+from douyinapipy.models.comment import Comment
+from douyinapipy.models.user import User, UserStats
+from douyinapipy.models.video import LightVideo, Video
 
 
 class UserModule(CamelCaseModel):

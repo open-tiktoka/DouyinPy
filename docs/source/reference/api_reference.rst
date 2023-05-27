@@ -6,9 +6,9 @@ API Reference
     :template: custom-module-template.rst
     :recursive:
 
-    tiktokapipy.api
-    tiktokapipy.async_api
-    tiktokapipy.models
+    douyinapipy.api
+    douyinapipy.async_api
+    douyinapipy.models
 
 .. rubric:: Exceptions
 
@@ -17,4 +17,4 @@ API Reference
    :template: custom-class-template.rst
    :nosignatures:
 
-   tiktokapipy.TikTokAPIError
+   douyinapipy.DouyinAPIError

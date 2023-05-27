@@ -2,17 +2,17 @@
 How it Works
 ************
 
-TikTokPy works without needing any login information or cookies. This is powerful for anonymity and avoiding timeouts,
+DouyinPy works without needing any login information or cookies. This is powerful for anonymity and avoiding timeouts,
 but this does come with its limitations.
 
-TikTokPy grabs information in two steps:
+DouyinPy grabs information in two steps:
 
 Grabbing Preloaded Content
 ==========================
 
-When you load a TikTok page, some JavaScript performs an API call and inserts the data directly into the HTML of the
+When you load a Douyin page, some JavaScript performs an API call and inserts the data directly into the HTML of the
 page. This data is used to insert any preloaded videos, comments, users, etc. This data is not removed from the HTML,
-so TikTokPy grabs it do initialize its data models.
+so DouyinPy grabs it do initialize its data models.
 
 The data is saved in the HTML in a script tag:
 
@@ -30,9 +30,9 @@ Grabbing Additional API Data
 ============================
 
 As more of the page is loaded, some scripts make some additional API calls to retrieve more data to display on the page.
-This data is not saved anywhere in the HTML, so TikTokPy intercepts these API calls and makes them itself. It uses the
-cookies and headers that would have been used by the page scripts to make the API calls. This allows TikTokPy to be
-aware of and make the API calls made when you normally browse TikTok without needing any login information.
+This data is not saved anywhere in the HTML, so DouyinPy intercepts these API calls and makes them itself. It uses the
+cookies and headers that would have been used by the page scripts to make the API calls. This allows DouyinPy to be
+aware of and make the API calls made when you normally browse Douyin without needing any login information.
 
 Limitations
 ===========
@@ -40,25 +40,25 @@ Limitations
 Slideshows
 ----------
 
-TikTok limits slideshows to mobile viewing. In order to retrieve data from slideshows, you must emulate a mobile device:
+Douyin limits slideshows to mobile viewing. In order to retrieve data from slideshows, you must emulate a mobile device:
 
 .. tabs::
 
-    .. code-tab:: py TikTokAPI
+    .. code-tab:: py DouyinAPI
 
-            from tiktokapipy.api import TikTokAPI
+            from douyinapipy.api import DouyinAPI
 
             def get_challenge_videos_scroll_down():
-                with TikTokAPI(emulate_mobile=True) as api:
+                with DouyinAPI(emulate_mobile=True) as api:
                     slideshow = api.video(link_to_slideshow)
                     ...
 
-    .. code-tab:: py AsyncTikTokAPI
+    .. code-tab:: py AsyncDouyinAPI
 
-            from tiktokapipy.async_api import AsyncTikTokAPI
+            from douyinapipy.async_api import AsyncDouyinAPI
 
             async def get_challenge_videos_scroll_down():
-                async with AsyncTikTokAPI(emulate_mobile=True) as api:
+                async with AsyncDouyinAPI(emulate_mobile=True) as api:
                     slideshow = await api.video(link_to_slideshow)
                     ...
 
@@ -67,31 +67,31 @@ See :ref:`Examples` for more.
 Data Collection
 ---------------
 
-By default, TikTokPy only grabs preloaded content and any API calls made during the page load. This is fairly limiting
+By default, DouyinPy only grabs preloaded content and any API calls made during the page load. This is fairly limiting
 for the amount of data you can retrieve. In order to grab more data, additional API calls will be needed to be
 triggered. This can only be done by scrolling down on the page. The amount to scroll down by is determined by how long
-you want TikTokPy to scroll down for:
+you want DouyinPy to scroll down for:
 
 .. tabs::
 
-    .. code-tab:: py TikTokAPI
+    .. code-tab:: py DouyinAPI
 
-            from tiktokapipy.api import TikTokAPI
+            from douyinapipy.api import DouyinAPI
 
             def get_challenge_videos_scroll_down():
                 # scroll down for 2.5 seconds when making requests
-                with TikTokAPI(scroll_down_time=2.5) as api:
+                with DouyinAPI(scroll_down_time=2.5) as api:
                     challenge = api.challenge(tag_name)
                     for video in challenge.videos:
                         ...
 
-    .. code-tab:: py AsyncTikTokAPI
+    .. code-tab:: py AsyncDouyinAPI
 
-            from tiktokapipy.async_api import AsyncTikTokAPI
+            from douyinapipy.async_api import AsyncDouyinAPI
 
             async def get_challenge_videos_scroll_down():
                 # scroll down for 2.5 seconds when making requests
-                async with AsyncTikTokAPI(scroll_down_time=2.5) as api:
+                async with AsyncDouyinAPI(scroll_down_time=2.5) as api:
                     challenge = await api.challenge(tag_name)
                     async for video in challenge.videos:
                         ...
@@ -113,27 +113,27 @@ Additionally, a navigation timeout can be specified, which will force a retry if
 
 .. tabs::
 
-    .. code-tab:: py TikTokAPI
+    .. code-tab:: py DouyinAPI
 
-            from tiktokapipy.api import TikTokAPI
+            from douyinapipy.api import DouyinAPI
 
             def do_something():
                 # retry twice (up to 3 navigation attempts), force-retry navigation after 10 seconds
-                with TikTokAPI(navigation_retries=2, navigation_timeout=10) as api:
+                with DouyinAPI(navigation_retries=2, navigation_timeout=10) as api:
                     ...
 
-    .. code-tab:: py AsyncTikTokAPI
+    .. code-tab:: py AsyncDouyinAPI
 
-            from tiktokapipy.async_api import AsyncTikTokAPI
+            from douyinapipy.async_api import AsyncDouyinAPI
 
             async def do_something():
                 # retry twice (up to 3 navigation attempts), force-retry navigation after 10 seconds
-                async with AsyncTikTokAPI(navigation_retries=2, navigation_timeout=10) as api:
+                async with AsyncDouyinAPI(navigation_retries=2, navigation_timeout=10) as api:
                     ...
 
-If navigation fails after all retries are spent, a :ref:`TikTokAPIError` will be raised.
+If navigation fails after all retries are spent, a :ref:`DouyinAPIError` will be raised.
 
 .. note::
     This normally happens when the ``wait_until`` parameter for the API is set to ``"networkidle"``. By default,
-    TikTokAPI will wait for a ``load`` event to be fired before scraping data, but this could miss some of the data
+    DouyinAPI will wait for a ``load`` event to be fired before scraping data, but this could miss some of the data
     retrieved from the API during page loading.

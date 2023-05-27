@@ -6,8 +6,8 @@ from __future__ import annotations
 
 from typing import Awaitable, Callable, Optional, Union
 
+from douyinapipy.models import CamelCaseModel
 from pydantic import Field
-from tiktokapipy.models import CamelCaseModel
 
 
 class ShareInfo(CamelCaseModel):
@@ -73,6 +73,6 @@ class Comment(CamelCaseModel):
     """Set on return from API. Call to retrieve data on the :class:`.User` that wrote the comment."""
 
 
-from tiktokapipy.models.user import LightUser, User  # noqa E402
+from douyinapipy.models.user import LightUser, User  # noqa E402
 
 Comment.update_forward_refs()

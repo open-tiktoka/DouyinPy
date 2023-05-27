@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from typing import Optional, Union
 
-from tiktokapipy.models import AsyncDeferredIterator, CamelCaseModel, DeferredIterator
+from douyinapipy.models import AsyncDeferredIterator, CamelCaseModel, DeferredIterator
 
 
 class ChallengeStats(CamelCaseModel):
@@ -41,7 +41,7 @@ class Challenge(LightChallenge):
     """Set on return from API. Can be iterated over to load :class:`.Video`s."""
 
 
-from tiktokapipy.models.video import LightVideo, Video  # noqa E402
+from douyinapipy.models.video import LightVideo, Video  # noqa E402
 
 Challenge.update_forward_refs()
 

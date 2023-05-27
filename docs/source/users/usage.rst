@@ -2,35 +2,35 @@
 Usage
 *****
 
-TikTokPy has both a synchronous and an asynchronous API. The interfaces are the same, but the asynchronous API
+DouyinPy has both a synchronous and an asynchronous API. The interfaces are the same, but the asynchronous API
 requires awaiting of certain functions and iterators. The following sections show example code for both.
 
 API Context Managers
 ====================
 
-The TikTokPy API should be used as a context manager in your program:
+The DouyinPy API should be used as a context manager in your program:
 
 .. tabs::
 
-    .. code-tab:: py TikTokAPI
+    .. code-tab:: py DouyinAPI
 
-            from tiktokapipy.api import TikTokAPI
+            from douyinapipy.api import DouyinAPI
 
             def do_something():
-                with TikTokAPI() as api:
+                with DouyinAPI() as api:
                     ...
 
-    .. code-tab:: py AsyncTikTokAPI
+    .. code-tab:: py AsyncDouyinAPI
 
-            from tiktokapipy.async_api import AsyncTikTokAPI
+            from douyinapipy.async_api import AsyncDouyinAPI
 
             async def do_something():
-                async with AsyncTikTokAPI() as api:
+                async with AsyncDouyinAPI() as api:
                     ...
 
-Internally, the API uses a Playwright BrowserContext to scrape data from TikTok. The initialization of the
-BrowserContext and corresponding Browser can be controlled by arguments passed to :ref:`TikTokAPI` or
-:ref:`AsyncTikTokAPI`. This allows for use of a proxy, custom executable location, and more. See their documentation
+Internally, the API uses a Playwright BrowserContext to scrape data from Douyin. The initialization of the
+BrowserContext and corresponding Browser can be controlled by arguments passed to :ref:`DouyinAPI` or
+:ref:`AsyncDouyinAPI`. This allows for use of a proxy, custom executable location, and more. See their documentation
 for more information.
 
 Examples
@@ -43,21 +43,21 @@ You can get information about a :ref:`Video` with a link.
 
 .. tabs::
 
-    .. code-tab:: py TikTokAPI
+    .. code-tab:: py DouyinAPI
 
-            from tiktokapipy.api import TikTokAPI
+            from douyinapipy.api import DouyinAPI
 
             def do_something():
-                with TikTokAPI() as api:
+                with DouyinAPI() as api:
                     video = api.video(video_url)
                     ...
 
-    .. code-tab:: py AsyncTikTokAPI
+    .. code-tab:: py AsyncDouyinAPI
 
-            from tiktokapipy.async_api import AsyncTikTokAPI
+            from douyinapipy.async_api import AsyncDouyinAPI
 
             async def do_something():
-                async with AsyncTikTokAPI() as api:
+                async with AsyncDouyinAPI() as api:
                     video = await api.video(video_url)
                     ...
 
@@ -68,22 +68,22 @@ Given a :ref:`Video` object, you can get the :ref:`User` object corresponding to
 
 .. tabs::
 
-    .. code-tab:: py TikTokAPI
+    .. code-tab:: py DouyinAPI
 
-            from tiktokapipy.api import TikTokAPI
+            from douyinapipy.api import DouyinAPI
 
             def do_something():
-                with TikTokAPI() as api:
+                with DouyinAPI() as api:
                     video = api.video(video_url)
                     creator = video.creator()
                     ...
 
-    .. code-tab:: py AsyncTikTokAPI
+    .. code-tab:: py AsyncDouyinAPI
 
-            from tiktokapipy.async_api import AsyncTikTokAPI
+            from douyinapipy.async_api import AsyncDouyinAPI
 
             async def do_something():
-                async with AsyncTikTokAPI() as api:
+                async with AsyncDouyinAPI() as api:
                     video = await api.video(video_url)
                     creator = await video.creator()
                     ...
@@ -95,22 +95,22 @@ Given a :ref:`User` object, you can retrieve that creator's most recent videos.
 
 .. tabs::
 
-    .. code-tab:: py TikTokAPI
+    .. code-tab:: py DouyinAPI
 
-            from tiktokapipy.api import TikTokAPI
+            from douyinapipy.api import DouyinAPI
 
             def do_something():
-                with TikTokAPI() as api:
+                with DouyinAPI() as api:
                     user = api.user(user_tag)
                     for video in user.videos:
                         ...
 
-    .. code-tab:: py AsyncTikTokAPI
+    .. code-tab:: py AsyncDouyinAPI
 
-            from tiktokapipy.async_api import AsyncTikTokAPI
+            from douyinapipy.async_api import AsyncDouyinAPI
 
             async def do_something():
-                async with AsyncTikTokAPI() as api:
+                async with AsyncDouyinAPI() as api:
                     user = await api.user(user_tag)
                     async for video in user.videos:
                         ...
@@ -124,30 +124,30 @@ Given a :ref:`User` object, you can retrieve that creator's most recent videos.
 Iterate Over Sorted Videos
 --------------------------
 
-Unfortunately, this strategy is not perfect. TikTok does not provide a direct way to sort :ref:`Video`, so you will
-only be able to perform the sorting on videos that are picked up by TikTokPy during scraping. More can be retrieved by
+Unfortunately, this strategy is not perfect. Douyin does not provide a direct way to sort :ref:`Video`, so you will
+only be able to perform the sorting on videos that are picked up by DouyinPy during scraping. More can be retrieved by
 setting ``scroll_down_time`` to something like 10 seconds in the API constructor. The ``videos`` (async) iterator that
 exists on :ref:`User` and :ref:`Challenge` objects contains a function called ``sorted_by()`` that has the same
 signature as the builtin ``sorted()`` but is faster if you want to sort on :ref:`VideoStats` or ``create_time``.
 
 .. tabs::
 
-    .. code-tab:: py TikTokAPI
+    .. code-tab:: py DouyinAPI
 
-            from tiktokapipy.api import TikTokAPI
+            from douyinapipy.api import DouyinAPI
 
             def do_something():
-                with TikTokAPI() as api:
+                with DouyinAPI() as api:
                     user = api.user(user_tag)
                     for video in user.videos.sorted_by(key=lambda vid: vid.stats.digg_count, reverse=True):
                         ...
 
-    .. code-tab:: py AsyncTikTokAPI
+    .. code-tab:: py AsyncDouyinAPI
 
-            from tiktokapipy.async_api import AsyncTikTokAPI
+            from douyinapipy.async_api import AsyncDouyinAPI
 
             async def do_something():
-                async with AsyncTikTokAPI() as api:
+                async with AsyncDouyinAPI() as api:
                     user = await api.user(user_tag)
                     async for video in user.videos.sorted_by(key=lambda vid: vid.stats.digg_count, reverse=True):
                         ...
@@ -159,27 +159,27 @@ signature as the builtin ``sorted()`` but is faster if you want to sort on :ref:
 Iterate Over Popular Videos Tagged with a Challenge
 ---------------------------------------------------
 
-TikTok refers to hashtags as "Challenges" internally. You can iterate over popular videos tagged with a specific
+Douyin refers to hashtags as "Challenges" internally. You can iterate over popular videos tagged with a specific
 :ref:`Challenge`.
 
 .. tabs::
 
-    .. code-tab:: py TikTokAPI
+    .. code-tab:: py DouyinAPI
 
-            from tiktokapipy.api import TikTokAPI
+            from douyinapipy.api import DouyinAPI
 
             def do_something():
-                with TikTokAPI() as api:
+                with DouyinAPI() as api:
                     challenge = api.challenge(tag_name)
                     for video in challenge.videos:
                         ...
 
-    .. code-tab:: py AsyncTikTokAPI
+    .. code-tab:: py AsyncDouyinAPI
 
-            from tiktokapipy.async_api import AsyncTikTokAPI
+            from douyinapipy.async_api import AsyncDouyinAPI
 
             async def do_something():
-                async with AsyncTikTokAPI() as api:
+                async with AsyncDouyinAPI() as api:
                     challenge = await api.challenge(tag_name)
                     async for video in challenge.videos:
                         ...
@@ -199,12 +199,12 @@ Get Video Statistics for a User
 
 .. tabs::
 
-    .. code-tab:: py TikTokAPI
+    .. code-tab:: py DouyinAPI
 
-            from tiktokapipy.api import TikTokAPI
+            from douyinapipy.api import DouyinAPI
 
             def do_something():
-                with TikTokAPI() as api:
+                with DouyinAPI() as api:
                     user = api.user(username)
                     for video in user.videos:
                         num_comments = video.stats.comment_count
@@ -213,12 +213,12 @@ Get Video Statistics for a User
                         num_shares = video.stats.share_count
                         ...
 
-    .. code-tab:: py AsyncTikTokAPI
+    .. code-tab:: py AsyncDouyinAPI
 
-            from tiktokapipy.async_api import AsyncTikTokAPI
+            from douyinapipy.async_api import AsyncDouyinAPI
 
             async def do_something():
-                async with AsyncTikTokAPI() as api:
+                async with AsyncDouyinAPI() as api:
                     user = await api.user(username)
                     async for video in user.videos:
                         num_comments = video.stats.comment_count
@@ -233,7 +233,7 @@ Get Video Statistics for a User
 Download Videos and Slideshows
 ------------------------------
 
-If all you want to do is download a video or slideshow from TikTok, go no further. Because slideshows are saved as
+If all you want to do is download a video or slideshow from Douyin, go no further. Because slideshows are saved as
 images with a sound, you'll need to join these images together with the sound. I'd suggest using `ffmpeg`_ for this:
 
 .. code-block:: py
@@ -246,8 +246,8 @@ images with a sound, you'll need to join these images together with the sound. I
     from os import path
 
     import aiohttp
-    from tiktokapipy.async_api import AsyncTikTokAPI
-    from tiktokapipy.models.video import Video
+    from douyinapipy.async_api import AsyncDouyinAPI
+    from douyinapipy.models.video import Video
 
     link = ...
     directory = ...
@@ -307,7 +307,7 @@ images with a sound, you'll need to join these images together with the sound. I
                 return io.BytesIO(await resp.read())
 
     async def download_video():
-        async with AsyncTikTokAPI() as api:
+        async with AsyncDouyinAPI() as api:
             video: Video = await api.video(link)
             if video.image_post:
                 downloaded = await save_slideshow(video)
@@ -326,17 +326,17 @@ This entire process could also be done with the synchronous API, but it probably
 
     .. code-block:: py
 
-        async def save_video(video: Video, api: AsyncTikTokAPI):
-            # Carrying over this cookie tricks TikTok into thinking this ClientSession was the Playwright instance
-            # used by the AsyncTikTokAPI instance
+        async def save_video(video: Video, api: AsyncDouyinAPI):
+            # Carrying over this cookie tricks Douyin into thinking this ClientSession was the Playwright instance
+            # used by the AsyncDouyinAPI instance
             async with aiohttp.ClientSession(cookies={cookie["name"]: cookie["value"] for cookie in await api.context.cookies() if cookie["name"] == "tt_chain_token"}) as session:
-                # Creating this header tricks TikTok into thinking it made the request itself
-                async with session.get(video.video.download_addr, headers={"referer": "https://www.tiktok.com/"}) as resp:
+                # Creating this header tricks Douyin into thinking it made the request itself
+                async with session.get(video.video.download_addr, headers={"referer": "https://www.douyin.com/"}) as resp:
                     return io.BytesIO(await resp.read())
 
     Note that this does require you to pass the api instance to this function, and you will likely also need to update
     the slideshow function as well.
 
-    Credit to `@papayyg <https://github.com/papayyg>`_ for identifying a solution to this issue in issue `Issue #35 <https://github.com/Russell-Newton/TikTokPy/issues/35#issuecomment-1502976477>`_
+    Credit to `@papayyg <https://github.com/papayyg>`_ for identifying a solution to this issue in issue `Issue #35 <https://github.com/Russell-Newton/DouyinPy/issues/35#issuecomment-1502976477>`_
 
 .. _ffmpeg: https://ffmpeg.org/download.html

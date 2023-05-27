@@ -1,6 +1,6 @@
 ---
 name: Question
-about: Ask how to do something with TikTokPy
+about: Ask how to do something with DouyinPy
 title: "[QUESTION]"
 labels: question
 assignees: ''

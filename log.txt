@@ -1,0 +1,121 @@
+.pkg: _optional_hooks> python /Users/wenke/miniconda3/lib/python3.9/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg: get_requires_for_build_editable> python /Users/wenke/miniconda3/lib/python3.9/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg: build_editable> python /Users/wenke/miniconda3/lib/python3.9/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+lint: install_package> python -I -m pip install --force-reinstall --no-deps /Users/wenke/github/DouyinPy/.tox/.tmp/package/2/douyinapipy-0.1.13.post1-0.editable-py3-none-any.whl
+lint: commands[0]> pre-commit run -a
+black....................................................................[42mPassed[m
+flake8...................................................................[41mFailed[m
+[2m- hook id: flake8[m
+[2m- exit code: 1[m
+
+[1mtests/conftest.py[m[36m:[m124[36m:[m122[36m:[m [1m[31mE501[m line too long (149 > 121 characters)
+[1mtests/conftest.py[m[36m:[m293[36m:[m122[36m:[m [1m[31mE501[m line too long (133 > 121 characters)
+
+seed isort known_third_party.............................................[42mPassed[m
+isort....................................................................[42mPassed[m
+trim trailing whitespace.................................................[42mPassed[m
+fix end of files.........................................................[42mPassed[m
+debug statements (python)................................................[42mPassed[m
+check toml...............................................................[42mPassed[m
+lint: exit 1 (2.90 seconds) /Users/wenke/github/DouyinPy> pre-commit run -a pid=4289
+lint: FAIL ✖ in 4.76 seconds
+py38: install_deps> python -I -m pip install '.[test]'
+.pkg-cpython38: install_requires> python -I -m pip install 'setuptools>=61.0'
+.pkg-cpython38: _optional_hooks> python /Users/wenke/miniconda3/lib/python3.9/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg-cpython38: get_requires_for_build_editable> python /Users/wenke/miniconda3/lib/python3.9/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg-cpython38: install_requires_for_build_editable> python -I -m pip install wheel
+.pkg-cpython38: build_editable> python /Users/wenke/miniconda3/lib/python3.9/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+py38: install_package_deps> python -I -m pip install numpy opencv-python 'playwright~=1.29' pydantic requests
+py38: install_package> python -I -m pip install --force-reinstall --no-deps /Users/wenke/github/DouyinPy/.tox/.tmp/package/3/douyinapipy-0.1.13.post1-0.editable-py3-none-any.whl
+py38: commands[0]> playwright install
+py38: commands[1]> pytest
+py38: exit 4 (21.16 seconds) /Users/wenke/github/DouyinPy> pytest pid=12855
+py38: FAIL ✖ in 39 minutes 19.74 seconds
+py310: skipped because could not find python interpreter with spec(s): py310
+py310: SKIP ⚠ in 0 seconds
+docs: install_deps> python -I -m pip install '.[docs]'
+docs: install_package_deps> python -I -m pip install numpy opencv-python 'playwright~=1.29' pydantic requests
+docs: install_package> python -I -m pip install --force-reinstall --no-deps /Users/wenke/github/DouyinPy/.tox/.tmp/package/4/douyinapipy-0.1.13.post1-0.editable-py3-none-any.whl
+docs: commands[0]> make -C docs html
+rm -rf ./source/generated/
+正在运行 Sphinx v6.2.1
+[自动摘要] 正在生成自动摘要：index.rst, reference/api_reference.rst, users/explanation.rst, users/installation.rst, users/usage.rst
+[自动摘要] 正在生成自动摘要：/Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.DouyinAPIError.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.rst
+[自动摘要] 正在生成自动摘要：/Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.challenge.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.video.rst
+[自动摘要] 正在生成自动摘要：/Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.challenge.Challenge.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.challenge.ChallengeStats.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.challenge.LightChallenge.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.challenge.challenge_link.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.video.ImageData.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.video.ImagePost.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.video.ImageUrlList.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.video.LightVideo.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.video.MusicData.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.video.SubtitleData.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.video.Video.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.video.VideoData.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.video.VideoStats.rst, /Users/wenke/github/DouyinPy/docs/source/generated/reference/douyinapipy.models.video.video_link.rst
+正在构建 [mo]： 0 个 po 文件的目标文件已过期
+正在写入输出……
+正在构建 [html]： 5 个源文件的目标文件已过期
+正在更新环境：[新配置] 有 23 个新增文件，有 0 个文件已被修改，有 0 个文件已被移除
+正在读取源文件……[  4%] generated/reference/douyinapipy.DouyinAPIError
+正在读取源文件……[  8%] generated/reference/douyinapipy.models
+正在读取源文件……[ 13%] generated/reference/douyinapipy.models.challenge
+正在读取源文件……[ 17%] generated/reference/douyinapipy.models.challenge.Challenge
+正在读取源文件……[ 21%] generated/reference/douyinapipy.models.challenge.ChallengeStats
+正在读取源文件……[ 26%] generated/reference/douyinapipy.models.challenge.LightChallenge
+正在读取源文件……[ 30%] generated/reference/douyinapipy.models.challenge.challenge_link
+正在读取源文件……[ 34%] generated/reference/douyinapipy.models.video
+正在读取源文件……[ 39%] generated/reference/douyinapipy.models.video.ImageData
+正在读取源文件……[ 43%] generated/reference/douyinapipy.models.video.ImagePost
+正在读取源文件……[ 47%] generated/reference/douyinapipy.models.video.ImageUrlList
+正在读取源文件……[ 52%] generated/reference/douyinapipy.models.video.LightVideo
+正在读取源文件……[ 56%] generated/reference/douyinapipy.models.video.MusicData
+正在读取源文件……[ 60%] generated/reference/douyinapipy.models.video.SubtitleData
+正在读取源文件……[ 65%] generated/reference/douyinapipy.models.video.Video
+正在读取源文件……[ 69%] generated/reference/douyinapipy.models.video.VideoData
+正在读取源文件……[ 73%] generated/reference/douyinapipy.models.video.VideoStats
+正在读取源文件……[ 78%] generated/reference/douyinapipy.models.video.video_link
+正在读取源文件……[ 82%] index
+正在读取源文件……[ 86%] reference/api_reference
+正在读取源文件……[ 91%] users/explanation
+正在读取源文件……[ 95%] users/installation
+正在读取源文件……[100%] users/usage
+
+正在查找当前已过期的文件……没有找到已过期文件
+正在 Pickle 序列化环境... 完成
+正在校验一致性... 完成
+正在准备写入文档... 完成
+正在写入输出……[  4%] generated/reference/douyinapipy.DouyinAPIError
+正在写入输出……[  8%] generated/reference/douyinapipy.models
+正在写入输出……[ 13%] generated/reference/douyinapipy.models.challenge
+正在写入输出……[ 17%] generated/reference/douyinapipy.models.challenge.Challenge
+正在写入输出……[ 21%] generated/reference/douyinapipy.models.challenge.ChallengeStats
+正在写入输出……[ 26%] generated/reference/douyinapipy.models.challenge.LightChallenge
+正在写入输出……[ 30%] generated/reference/douyinapipy.models.challenge.challenge_link
+正在写入输出……[ 34%] generated/reference/douyinapipy.models.video
+正在写入输出……[ 39%] generated/reference/douyinapipy.models.video.ImageData
+正在写入输出……[ 43%] generated/reference/douyinapipy.models.video.ImagePost
+正在写入输出……[ 47%] generated/reference/douyinapipy.models.video.ImageUrlList
+正在写入输出……[ 52%] generated/reference/douyinapipy.models.video.LightVideo
+正在写入输出……[ 56%] generated/reference/douyinapipy.models.video.MusicData
+正在写入输出……[ 60%] generated/reference/douyinapipy.models.video.SubtitleData
+正在写入输出……[ 65%] generated/reference/douyinapipy.models.video.Video
+正在写入输出……[ 69%] generated/reference/douyinapipy.models.video.VideoData
+正在写入输出……[ 73%] generated/reference/douyinapipy.models.video.VideoStats
+正在写入输出……[ 78%] generated/reference/douyinapipy.models.video.video_link
+正在写入输出……[ 82%] index
+正在写入输出……[ 86%] reference/api_reference
+正在写入输出……[ 91%] users/explanation
+正在写入输出……[ 95%] users/installation
+正在写入输出……[100%] users/usage
+
+正在生成索引... genindex py-modindex 完成
+正在高亮模块代码……[ 33%] douyinapipy
+正在高亮模块代码……[ 66%] douyinapipy.models.challenge
+正在高亮模块代码……[100%] douyinapipy.models.video
+
+正在写入附加页面... search 完成
+正在复制静态文件... 完成
+正在复制额外文件... 完成
+正在导出 English (code: en) 的搜索索引... 完成
+正在导出对象清单... 完成
+构建成功，21 条警告。
+
+HTML 页面保存在 build/html 目录。
+.pkg: _exit> python /Users/wenke/miniconda3/lib/python3.9/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg-cpython38: _exit> python /Users/wenke/miniconda3/lib/python3.9/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+  lint: FAIL code 1 (4.76=setup[1.85]+cmd[2.90] seconds)
+  py38: FAIL code 4 (2359.74=setup[2335.99]+cmd[2.59,21.16] seconds)
+  py310: SKIP (0.00 seconds)
+  docs: OK (58.24=setup[32.16]+cmd[26.08] seconds)
+  evaluation failed :( (2423.88 seconds)

@@ -5,13 +5,13 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Awaitable, Callable, List, Optional, Union
 
-from pydantic import Field
-from tiktokapipy.models import (
+from douyinapipy.models import (
     AsyncDeferredIterator,
     CamelCaseModel,
     DeferredIterator,
     TitleCaseModel,
 )
+from pydantic import Field
 
 
 class VideoStats(CamelCaseModel):
@@ -207,13 +207,13 @@ class Video(LightVideo):
     """Set on return from API. Iterate over to retrieve data on the :class:`.Challenge`s applied to the video."""
 
 
-from tiktokapipy.models.challenge import Challenge, LightChallenge  # noqa E402
-from tiktokapipy.models.comment import Comment  # noqa E402
-from tiktokapipy.models.user import LightUser, User, UserStats  # noqa E402
+from douyinapipy.models.challenge import Challenge, LightChallenge  # noqa E402
+from douyinapipy.models.comment import Comment  # noqa E402
+from douyinapipy.models.user import LightUser, User, UserStats  # noqa E402
 
 Video.update_forward_refs()
 
 
 def video_link(video_id: int) -> str:
-    """Get a working link to a TikTok video from the video's unique id."""
-    return f"https://m.tiktok.com/v/{video_id}"
+    """Get a working link to a Douyin video from the video's unique id."""
+    return f"https://douyin.com/video/{video_id}"

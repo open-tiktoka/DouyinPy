@@ -2,12 +2,12 @@
 Installation
 ============
 
-How to install TikTokPy
+How to install DouyinPy
 -----------------------
 
-Install the ``tiktokapipy`` package (or add it to your project requirements) and set up Playwright:
+Install the ``douyinapipy`` package (or add it to your project requirements) and set up Playwright:
 
 .. code:: console
 
-    pip install tiktokapipy
+    pip install douyinapipy
     python -m playwright install

@@ -1,5 +1,5 @@
 import pytest
-from tiktokapipy.models.video import video_link
+from douyinapipy.models.video import video_link
 
 
 async def test_video_async(async_api, video_id):

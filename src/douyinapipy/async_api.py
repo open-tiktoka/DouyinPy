@@ -14,21 +14,21 @@ if TYPE_CHECKING:
     from _typeshed import SupportsLessThan
 
 import playwright.async_api
-from playwright.async_api import Page, Route, TimeoutError, async_playwright
-from pydantic import ValidationError
-from tiktokapipy import TikTokAPIError, TikTokAPIWarning
-from tiktokapipy.api import (
+from douyinapipy import DouyinAPIError, DouyinAPIWarning
+from douyinapipy.api import (
+    DouyinAPI,
     LightUserGetter,
-    TikTokAPI,
     _DataModelT,
     _LightIterInT,
     _LightIterOutT,
 )
-from tiktokapipy.models import AsyncDeferredIterator
-from tiktokapipy.models.challenge import Challenge, LightChallenge, challenge_link
-from tiktokapipy.models.raw_data import APIResponse
-from tiktokapipy.models.user import User, user_link
-from tiktokapipy.models.video import LightVideo, Video, video_link
+from douyinapipy.models import AsyncDeferredIterator
+from douyinapipy.models.challenge import Challenge, LightChallenge, challenge_link
+from douyinapipy.models.raw_data import APIResponse
+from douyinapipy.models.user import User, user_link
+from douyinapipy.models.video import LightVideo, Video, video_link
+from playwright.async_api import Page, Route, TimeoutError, async_playwright
+from pydantic import ValidationError
 
 
 class AsyncLightIter(Generic[_LightIterInT, _LightIterOutT], ABC):
@@ -38,7 +38,7 @@ class AsyncLightIter(Generic[_LightIterInT, _LightIterOutT], ABC):
     :autodoc-skip:
     """
 
-    def __init__(self, light_models: List[_LightIterInT], api: AsyncTikTokAPI):
+    def __init__(self, light_models: List[_LightIterInT], api: AsyncDouyinAPI):
         self.light_models: List[_LightIterInT] = light_models
         self._api = api
 
@@ -93,13 +93,13 @@ class AsyncLightUserGetter(LightUserGetter):
         return await self._api.user(self.light_user.unique_id)
 
 
-class AsyncTikTokAPI(TikTokAPI):
-    """Asynchronous API used to scrape data from TikTok"""
+class AsyncDouyinAPI(DouyinAPI):
+    """Asynchronous API used to scrape data from Douyin"""
 
     def __enter__(self):
-        raise TikTokAPIError("Must use async context manager with AsyncTikTokAPI")
+        raise DouyinAPIError("Must use async context manager with AsyncDouyinAPI")
 
-    async def __aenter__(self) -> AsyncTikTokAPI:
+    async def __aenter__(self) -> AsyncDouyinAPI:
         self._playwright = await async_playwright().start()
         self._browser = await self.playwright.chromium.launch(
             headless=self.headless, **self.kwargs
@@ -217,14 +217,14 @@ if (navigator.webdriver === false) {
             except TimeoutError:
                 warnings.warn(
                     "Reached navigation timeout. Retrying...",
-                    category=TikTokAPIWarning,
+                    category=DouyinAPIWarning,
                     stacklevel=2,
                 )
                 await page.close()
                 continue
             break
         else:
-            raise TikTokAPIError(
+            raise DouyinAPIError(
                 f"Data scraping unable to complete in {self.navigation_timeout / 1000}s "
                 f"(retries: {self.navigation_retries})"
             )
@@ -311,4 +311,4 @@ var intervalID = setInterval(function () {
         await page.evaluate("clearInterval(intervalID)")
 
 
-__all__ = ["AsyncTikTokAPI"]
+__all__ = ["AsyncDouyinAPI"]
